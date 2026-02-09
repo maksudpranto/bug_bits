@@ -1,0 +1,15 @@
+{
+    "title": "Mobile Development",
+    "summary": "Native-quality mobile apps for iOS and Android using React Native.",
+    "apiIcon": "Smartphone",
+    "content": [
+        {
+            "type": "paragraph",
+            "children": [
+                {
+                    "text": "Reach your customers on the devices they use most. Our mobile development team builds cross-platform applications that offer a native look and feel, ensuring high performance and a seamless user experience."
+                }
+            ]
+        }
+    ]
+}

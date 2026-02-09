@@ -1,0 +1,14 @@
+{
+  "contact": {
+    "email": "maksudpranto@gmail.com",
+    "phone": "01756610535",
+    "address": "201 North Ibrahimpur",
+    "socials": {}
+  },
+  "navigation": [
+    {
+      "label": "About Us",
+      "url": "/about"
+    }
+  ]
+}

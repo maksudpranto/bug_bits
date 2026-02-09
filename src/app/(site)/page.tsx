@@ -1,0 +1,52 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Code, Zap, Globe, Server, Shield, Database, Copy, Cloud } from "lucide-react";
+import Testimonials from "@/components/testimonials";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '@/keystatic.config';
+import HeroSection from "@/components/hero-section";
+import WhyChooseUs from "@/components/why-choose-us";
+import OurProcess from "@/components/our-process";
+import PortfolioSection from "@/components/portfolio-section";
+import AboutSnippet from "@/components/about-snippet";
+import CTASection from "@/components/cta-section";
+import FeaturesSection from "@/components/features-section";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+export default async function Home() {
+  const homepageFiles = await reader.singletons.homepage.read();
+
+  // Default values if CMS content is missing
+  const hero = homepageFiles?.hero || {
+    badge: "🚀 Launching Ideas into Orbit",
+    title: "Software Solutions used to build the Future",
+    highlightWord: "Future",
+    subtitle: "Bug Bits transforms complex problems into elegant software. We build scalable, high-performance applications for the modern web.",
+    primaryButtonText: "Get Started",
+    secondaryButtonText: "View Services"
+  };
+
+  const features = (homepageFiles?.features || []) as any[];
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-1">
+        <HeroSection heroData={hero} />
+
+        {/* Features Preview */}
+        <FeaturesSection data={features} />
+
+        {/* Testimonials Section */}
+        <Testimonials />
+
+        {/* New Sections */}
+        <WhyChooseUs data={homepageFiles?.whyChooseUs as any || []} />
+        <OurProcess data={homepageFiles?.process as any || []} />
+        <CTASection data={homepageFiles?.ctaSecondary} />
+        <PortfolioSection data={homepageFiles?.portfolio as any || []} />
+        <AboutSnippet data={homepageFiles?.aboutSection} />
+        <CTASection data={homepageFiles?.cta} />
+      </main>
+    </div>
+  );
+}

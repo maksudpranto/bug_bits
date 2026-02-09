@@ -1,0 +1,68 @@
+{
+    "title": "Web Development",
+    "summary": "High-performance, SEO-optimized websites built with Next.js and React.",
+    "apiIcon": "Globe",
+    "content": [
+        {
+            "type": "paragraph",
+            "children": [
+                {
+                    "text": "We specialize in building modern web applications that are fast, secure, and scalable. Using the latest technologies like Next.js 14, React, and Tailwind CSS, we deliver pixel-perfect designs that perform flawlessly on all devices."
+                }
+            ]
+        },
+        {
+            "type": "heading",
+            "level": 3,
+            "children": [
+                {
+                    "text": "Our Approach"
+                }
+            ]
+        },
+        {
+            "type": "unordered-list",
+            "children": [
+                {
+                    "type": "list-item",
+                    "children": [
+                        {
+                            "type": "list-item-content",
+                            "children": [
+                                {
+                                    "text": "Component-Driven Architecture"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "list-item",
+                    "children": [
+                        {
+                            "type": "list-item-content",
+                            "children": [
+                                {
+                                    "text": "Server-Side Rendering for SEO"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "list-item",
+                    "children": [
+                        {
+                            "type": "list-item-content",
+                            "children": [
+                                {
+                                    "text": "Accessibility First"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,121 @@
+{
+  "hero": {
+    "badge": "🚀 Reimagining Digital Innovation",
+    "title": "We Build Software That Defines The",
+    "highlightWord": "Future",
+    "subtitle": "Bug Bits empowers businesses with cutting-edge web & mobile solutions. We turn complex logic into elegant, scalable, and high-performance applications.",
+    "layout": "split",
+    "backgroundStyle": "mesh",
+    "primaryButtonText": "Start Your Project",
+    "secondaryButtonText": "Explore Services"
+  },
+  "features": [
+    {
+      "title": "Web Application Development",
+      "description": "Scalable, high-performance web apps built with Next.js and React. We prioritize speed, SEO, and user experience.",
+      "icon": "Globe"
+    },
+    {
+      "title": "Mobile Solutions",
+      "description": "Native-like experience on all devices. Cross-platform development that reaches your users wherever they are.",
+      "icon": "Zap"
+    },
+    {
+      "title": "Cloud Infrastructure",
+      "description": "Secure, scalable, and cost-effective cloud architecture. We handle the devops so you can focus on business.",
+      "icon": "Cloud"
+    },
+    {
+      "title": "Enterprise Security",
+      "description": "Bank-grade security protocols to protect your data and your users. Privacy by design.",
+      "icon": "Shield"
+    },
+    {
+      "title": "Database Optimization",
+      "description": "High-availability data solutions. We design schemas that scale with your growth.",
+      "icon": "Database"
+    },
+    {
+      "title": "API Integration",
+      "description": "Seamlessly connect your systems with robust REST and GraphQL APIs.",
+      "icon": "Server"
+    }
+  ],
+  "whyChooseUs": [
+    {
+      "title": "Excellence in Engineering",
+      "description": "Our team consists of top-tier engineers who are passionate about code quality and best practices."
+    },
+    {
+      "title": "Transparent Communication",
+      "description": "We believe in open, honest communication. You'll always know the status of your project."
+    },
+    {
+      "title": "On-Time Delivery",
+      "description": "We respect deadlines. Our agile process ensures we deliver milestones on schedule."
+    },
+    {
+      "title": "Client-Centric Approach",
+      "description": "Your success is our success. We work closely with you to understand your unique business needs."
+    }
+  ],
+  "process": [
+    {
+      "title": "Discovery",
+      "description": "We start by understanding your vision, goals, and requirements through deep-dive sessions."
+    },
+    {
+      "title": "Strategy & Design",
+      "description": "We create a comprehensive roadmap and design intuitive, beautiful user interfaces."
+    },
+    {
+      "title": "Development",
+      "description": "Our engineers build your solution using the latest technologies and rigorous testing."
+    },
+    {
+      "title": "Launch & Scale",
+      "description": "We deploy your product and provide ongoing support to help you scale and grow."
+    }
+  ],
+  "portfolio": [
+    {
+      "project": "FinTrack Pro",
+      "description": "A comprehensive financial dashboard for enterprise clients, featuring real-time data visualization.",
+      "image": "/images/portfolio/portfolio/0/image.png",
+      "link": "#"
+    },
+    {
+      "project": "ShopNova E-commerce",
+      "description": "A modern, headless e-commerce platform built for high-volume retail brands.",
+      "image": "/images/portfolio/portfolio/1/image.png",
+      "link": "#"
+    },
+    {
+      "project": "HealthSync App",
+      "description": "A HIPAA-compliant telemedicine application connecting patients with healthcare providers.",
+      "image": "/images/portfolio/portfolio/2/image.png",
+      "link": "#"
+    }
+  ],
+  "aboutSection": {
+    "title": "About Bug Bits",
+    "content": "Founded in 2024, Bug Bits is a technology partner for ambitious companies. We combine technical expertise with creative problem-solving to deliver software that makes a difference.\n\nOur team is distributed globally but united by a single mission: to build the future of digital experiences.",
+    "image": "/images/about/aboutSection/image.jpg"
+  },
+  "cta": {
+    "title": "Ready to Start Your Project?",
+    "subtitle": "Would you like to start a project with us? Let’s discuss your idea and turn it into a reliable digital solution.",
+    "buttonText": "Get a Free Consultation",
+    "buttonLink": "/contact"
+  },
+  "ctaSecondary": {
+    "title": "Innovative Solutions for Complex Problems",
+    "subtitle": "We don’t just build apps; we solve business challenges with smart technology.",
+    "buttonText": "See Our Solutions",
+    "buttonLink": "/services"
+  },
+  "contactSection": {
+    "title": "Get in Touch",
+    "description": "Have a question or a project idea? We'd love to hear from you."
+  }
+}

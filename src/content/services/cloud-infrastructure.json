@@ -1,0 +1,15 @@
+{
+    "title": "Cloud Infrastructure",
+    "summary": "Scalable cloud solutions on AWS, Azure, and Google Cloud.",
+    "apiIcon": "Cloud",
+    "content": [
+        {
+            "type": "paragraph",
+            "children": [
+                {
+                    "text": "Optimize your operations with our cloud infrastructure services. We design and implement secure, scalable architectures that grow with your business while minimizing costs."
+                }
+            ]
+        }
+    ]
+}
