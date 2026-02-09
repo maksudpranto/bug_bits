@@ -24,23 +24,23 @@ export default function HeroSection({ heroData }: { heroData: any }) {
             case 'mesh':
                 return (
                     <div className="absolute inset-0 -z-10 group overflow-hidden">
-                        <div className="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full bg-orange-500/10 blur-[120px] animate-pulse"></div>
-                        <div className="absolute -bottom-[40%] -right-[20%] w-[80%] h-[80%] rounded-full bg-amber-500/10 blur-[120px] animate-pulse delay-700"></div>
-                        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
+                        <div className="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full bg-primary/10 blur-[120px] animate-pulse"></div>
+                        <div className="absolute -bottom-[40%] -right-[20%] w-[80%] h-[80%] rounded-full bg-primary/10 blur-[120px] animate-pulse delay-700"></div>
+                        <div className="absolute inset-0 bg-[radial-gradient(hsl(var(--muted-foreground)/0.1)_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
                     </div>
                 );
             case 'void':
                 return (
-                    <div className="absolute inset-0 -z-10 bg-[#0c0500]">
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#2d1a0a_1px,transparent_1px),linear-gradient(to_bottom,#2d1a0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-orange-900/10 blur-[120px] rounded-full"></div>
+                    <div className="absolute inset-0 -z-10 bg-background">
+                        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.05)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 blur-[120px] rounded-full"></div>
                     </div>
                 );
             default: // gradient
                 return (
                     <div className="absolute inset-0 -z-10">
-                        <div className="absolute inset-0 bg-background [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#f97316_100%)] opacity-20 dark:opacity-40"></div>
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+                        <div className="absolute inset-0 bg-background [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,hsl(var(--primary))_100%)] opacity-20 dark:opacity-40"></div>
+                        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--muted-foreground)/0.05)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--muted-foreground)/0.05)_1px,transparent_1px)] bg-[size:14px_24px]"></div>
                     </div>
                 );
         }
@@ -90,7 +90,7 @@ export default function HeroSection({ heroData }: { heroData: any }) {
                                 <>
                                     {titleParts[0]}
                                     <span className="relative inline-block px-1">
-                                        <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-500 to-red-600">
+                                        <span className="relative z-10 text-dynamic-gradient">
                                             {heroData.highlightWord}
                                         </span>
                                         <motion.span
@@ -115,12 +115,39 @@ export default function HeroSection({ heroData }: { heroData: any }) {
                         </motion.p>
 
                         <motion.div variants={itemVariants} className={`flex flex-wrap gap-4 ${heroData.layout === 'split' ? '' : 'justify-center'}`}>
-                            <Button size="lg" className="rounded-full px-8 h-14 text-lg font-bold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:-translate-y-1">
-                                {heroData.primaryButtonText} <ArrowRight className="ml-2 w-5 h-5" />
-                            </Button>
-                            <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-lg font-bold backdrop-blur-sm hover:bg-muted/40 transition-all">
-                                {heroData.secondaryButtonText}
-                            </Button>
+                            {heroData.primaryButton?.text && (
+                                <Button
+                                    size="lg"
+                                    className="rounded-full px-8 h-14 text-lg font-bold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:-translate-y-1"
+                                    customStyles={{
+                                        background: heroData.primaryButton.background,
+                                        hover: heroData.primaryButton.hover,
+                                        text: heroData.primaryButton.text_color
+                                    }}
+                                    asChild
+                                >
+                                    <a href={heroData.primaryButton.link || '#'}>
+                                        {heroData.primaryButton.text} <ArrowRight className="ml-2 w-5 h-5" />
+                                    </a>
+                                </Button>
+                            )}
+                            {heroData.secondaryButton?.text && (
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    className="rounded-full px-8 h-14 text-lg font-bold backdrop-blur-sm hover:bg-muted/40 transition-all"
+                                    customStyles={{
+                                        background: heroData.secondaryButton.background,
+                                        hover: heroData.secondaryButton.hover,
+                                        text: heroData.secondaryButton.text_color
+                                    }}
+                                    asChild
+                                >
+                                    <a href={heroData.secondaryButton.link || '#'}>
+                                        {heroData.secondaryButton.text}
+                                    </a>
+                                </Button>
+                            )}
                         </motion.div>
                     </motion.div>
 
@@ -131,7 +158,7 @@ export default function HeroSection({ heroData }: { heroData: any }) {
                             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                             className="relative lg:ml-auto"
                         >
-                            <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-orange-500/10">
+                            <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/10">
                                 {heroData.image ? (
                                     <Image
                                         src={heroData.image}
@@ -142,7 +169,7 @@ export default function HeroSection({ heroData }: { heroData: any }) {
                                         priority
                                     />
                                 ) : (
-                                    <div className="aspect-[4/3] bg-gradient-to-br from-orange-600/20 to-amber-600/20 flex items-center justify-center backdrop-blur-3xl group">
+                                    <div className="aspect-[4/3] bg-primary/10 flex items-center justify-center backdrop-blur-3xl group">
                                         <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center text-white ring-8 ring-white/5 transition-transform group-hover:scale-110">
                                             <Play className="w-8 h-8 fill-white" />
                                         </div>

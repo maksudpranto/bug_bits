@@ -11,8 +11,8 @@ export default function CTASection({ data }: { data: any }) {
         <section className="relative py-24 overflow-hidden">
             {/* Background Elements */}
             <div className="absolute inset-0 -z-10">
-                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-[100px] animate-pulse" />
-                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] animate-pulse delay-700" />
+                <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] animate-pulse" />
+                <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] animate-pulse delay-700" />
             </div>
 
             <div className="container px-4 md:px-6">
@@ -21,7 +21,7 @@ export default function CTASection({ data }: { data: any }) {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-amber-500/5 p-8 md:p-16 text-center backdrop-blur-xl shadow-2xl shadow-primary/5"
+                    className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-8 md:p-16 text-center backdrop-blur-xl shadow-2xl shadow-primary/5"
                 >
                     {/* Decorative Grid */}
                     <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.15] dark:opacity-[0.05]" />
@@ -51,11 +51,22 @@ export default function CTASection({ data }: { data: any }) {
                             transition={{ delay: 0.4 }}
                             className="flex flex-col gap-4 sm:flex-row justify-center pt-4"
                         >
-                            <Button size="lg" className="rounded-full px-10 h-16 text-lg font-bold shadow-xl shadow-primary/20 transition-all hover:-translate-y-1 hover:shadow-primary/30" asChild>
-                                <a href={data.buttonLink} className="flex items-center">
-                                    {data.buttonText} <ArrowRight className="ml-2 w-5 h-5" />
-                                </a>
-                            </Button>
+                            {data.button?.text && (
+                                <Button
+                                    size="lg"
+                                    className="rounded-full px-10 h-16 text-lg font-bold shadow-xl shadow-primary/20 transition-all hover:-translate-y-1 hover:shadow-primary/30"
+                                    customStyles={{
+                                        background: data.button.background,
+                                        hover: data.button.hover,
+                                        text: data.button.text_color
+                                    }}
+                                    asChild
+                                >
+                                    <a href={data.button.link || data.buttonLink || '#'} className="flex items-center">
+                                        {data.button.text} <ArrowRight className="ml-2 w-5 h-5" />
+                                    </a>
+                                </Button>
+                            )}
                         </motion.div>
                     </div>
 

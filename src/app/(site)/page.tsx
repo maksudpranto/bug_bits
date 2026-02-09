@@ -26,7 +26,10 @@ export default async function Home() {
     secondaryButtonText: "View Services"
   };
 
-  const features = (homepageFiles?.features || []) as any[];
+  const features = (homepageFiles?.features || { title: "Our Core Expertise", subtitle: "We leverage the latest technologies to build robust, scalable, and high-performance digital solutions.", items: [] }) as any;
+  const whyChooseUs = (homepageFiles?.whyChooseUs || { title: "Why Choose Us", description: "We deliver more than just code.", items: [] }) as any;
+  const process = (homepageFiles?.process || { title: "Our Process", description: "Methodology for success.", items: [] }) as any;
+  const portfolio = (homepageFiles?.portfolio || { title: "Our Work", description: "Impactful solutions.", items: [] }) as any;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,10 +43,10 @@ export default async function Home() {
         <Testimonials />
 
         {/* New Sections */}
-        <WhyChooseUs data={homepageFiles?.whyChooseUs as any || []} />
-        <OurProcess data={homepageFiles?.process as any || []} />
+        <WhyChooseUs data={whyChooseUs} />
+        <OurProcess data={process} />
         <CTASection data={homepageFiles?.ctaSecondary} />
-        <PortfolioSection data={homepageFiles?.portfolio as any || []} />
+        <PortfolioSection data={portfolio} />
         <AboutSnippet data={homepageFiles?.aboutSection} />
         <CTASection data={homepageFiles?.cta} />
       </main>

@@ -1,5 +1,13 @@
 import { config, fields, singleton, collection } from '@keystatic/core';
 
+const buttonSchema = (label: string, defaultBg = '#f97316', defaultHover = '#ea580c', defaultText = '#ffffff') => fields.object({
+    text: fields.text({ label: `${label} Text` }),
+    link: fields.text({ label: `${label} Link` }),
+    background: fields.text({ label: `${label} Background (Hex)`, defaultValue: defaultBg }),
+    hover: fields.text({ label: `${label} Hover (Hex)`, defaultValue: defaultHover }),
+    text_color: fields.text({ label: `${label} Text Color (Hex)`, defaultValue: defaultText }),
+}, { label: `${label} Settings` });
+
 export default config({
     storage: {
         kind: 'local',
@@ -37,70 +45,85 @@ export default config({
                         directory: 'public/images/hero',
                         publicPath: '/images/hero',
                     }),
-                    primaryButtonText: fields.text({ label: 'Primary Button Text' }),
-                    secondaryButtonText: fields.text({ label: 'Secondary Button Text' }),
+                    primaryButton: buttonSchema('Primary Button'),
+                    secondaryButton: buttonSchema('Secondary Button', '#1e293b', '#334155', '#ffffff'),
                 }, { label: 'Hero Section' }),
-                features: fields.array(
-                    fields.object({
-                        title: fields.text({ label: 'Feature Title' }),
-                        description: fields.text({ label: 'Feature Description' }),
-                        icon: fields.select({
-                            label: 'Icon',
-                            options: [
-                                { label: 'Globe', value: 'Globe' },
-                                { label: 'Zap', value: 'Zap' },
-                                { label: 'Cloud', value: 'Cloud' },
-                                { label: 'Code', value: 'Code' },
-                                { label: 'Server', value: 'Server' },
-                                { label: 'Shield', value: 'Shield' },
-                                { label: 'Database', value: 'Database' },
-                                { label: 'Clone', value: 'Copy' },
-                            ],
-                            defaultValue: 'Globe',
+                features: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Our Core Expertise' }),
+                    subtitle: fields.text({ label: 'Section Subtitle', multiline: true, defaultValue: 'We leverage the latest technologies to build robust, scalable, and high-performance digital solutions.' }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Feature Title' }),
+                            description: fields.text({ label: 'Feature Description' }),
+                            icon: fields.select({
+                                label: 'Icon',
+                                options: [
+                                    { label: 'Globe', value: 'Globe' },
+                                    { label: 'Zap', value: 'Zap' },
+                                    { label: 'Cloud', value: 'Cloud' },
+                                    { label: 'Code', value: 'Code' },
+                                    { label: 'Server', value: 'Server' },
+                                    { label: 'Shield', value: 'Shield' },
+                                    { label: 'Database', value: 'Database' },
+                                    { label: 'Clone', value: 'Copy' },
+                                ],
+                                defaultValue: 'Globe',
+                            }),
                         }),
-                    }),
-                    {
-                        label: 'Features List',
-                        description: 'Manage homepage features. You can Duplicate (Clone) or Remove items using the individual item menus.',
-                        itemLabel: props => props.fields.title.value || 'Feature',
-                    }
-                ),
-                whyChooseUs: fields.array(
-                    fields.object({
-                        title: fields.text({ label: 'Title' }),
-                        description: fields.text({ label: 'Description', multiline: true }),
-                    }),
-                    {
-                        label: 'Why Choose Us',
-                        itemLabel: props => props.fields.title.value || 'Reason',
-                    }
-                ),
-                process: fields.array(
-                    fields.object({
-                        title: fields.text({ label: 'Step Title' }),
-                        description: fields.text({ label: 'Description', multiline: true }),
-                    }),
-                    {
-                        label: 'Our Process',
-                        itemLabel: props => props.fields.title.value || 'Step',
-                    }
-                ),
-                portfolio: fields.array(
-                    fields.object({
-                        project: fields.text({ label: 'Project Name' }),
-                        description: fields.text({ label: 'Short Description' }),
-                        image: fields.image({
-                            label: 'Project Image',
-                            directory: 'public/images/portfolio',
-                            publicPath: '/images/portfolio',
+                        {
+                            label: 'Features List',
+                            itemLabel: props => props.fields.title.value || 'Feature',
+                        }
+                    ),
+                }, { label: 'Features Section' }),
+                whyChooseUs: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Why Choose Us' }),
+                    description: fields.text({ label: 'Section Description', multiline: true, defaultValue: 'We deliver more than just code. We deliver value, reliability, and innovation.' }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
                         }),
-                        link: fields.text({ label: 'Project Link' }),
-                    }),
-                    {
-                        label: 'Portfolio / Our Work',
-                        itemLabel: props => props.fields.project.value || 'Project',
-                    }
-                ),
+                        {
+                            label: 'Items',
+                            itemLabel: props => props.fields.title.value || 'Reason',
+                        }
+                    ),
+                }, { label: 'Why Choose Us Section' }),
+                process: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Our Process' }),
+                    description: fields.text({ label: 'Section Description', multiline: true, defaultValue: 'From concept to launch, we follow a proven methodology to ensure success.' }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Step Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                        }),
+                        {
+                            label: 'Steps',
+                            itemLabel: props => props.fields.title.value || 'Step',
+                        }
+                    ),
+                }, { label: 'Our Process Section' }),
+                portfolio: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Our Work' }),
+                    description: fields.text({ label: 'Section Description', multiline: true, defaultValue: 'Explore some of the impactful digital solutions we\'ve delivered.' }),
+                    items: fields.array(
+                        fields.object({
+                            project: fields.text({ label: 'Project Name' }),
+                            description: fields.text({ label: 'Short Description' }),
+                            image: fields.image({
+                                label: 'Project Image',
+                                directory: 'public/images/portfolio',
+                                publicPath: '/images/portfolio',
+                            }),
+                            link: fields.text({ label: 'Project Link' }),
+                        }),
+                        {
+                            label: 'Projects',
+                            itemLabel: props => props.fields.project.value || 'Project',
+                        }
+                    ),
+                }, { label: 'Portfolio Section' }),
                 aboutSection: fields.object({
                     title: fields.text({ label: 'Title' }),
                     content: fields.text({ label: 'Content', multiline: true }),
@@ -113,19 +136,23 @@ export default config({
                 cta: fields.object({
                     title: fields.text({ label: 'Title' }),
                     subtitle: fields.text({ label: 'Subtitle', multiline: true }),
-                    buttonText: fields.text({ label: 'Button Text' }),
-                    buttonLink: fields.text({ label: 'Button Link' }),
+                    button: buttonSchema('Button'),
                 }, { label: 'Call to Action Section 1 (Lead Generation)' }),
                 ctaSecondary: fields.object({
                     title: fields.text({ label: 'Title' }),
                     subtitle: fields.text({ label: 'Subtitle', multiline: true }),
-                    buttonText: fields.text({ label: 'Button Text' }),
-                    buttonLink: fields.text({ label: 'Button Link' }),
+                    button: buttonSchema('Button'),
                 }, { label: 'Call to Action Section 2 (Middle Page)' }),
                 contactSection: fields.object({
                     title: fields.text({ label: 'Title' }),
                     description: fields.text({ label: 'Description', multiline: true }),
                 }, { label: 'Contact Section' }),
+                footer: fields.object({
+                    socialTitle: fields.text({ label: 'Social Channels Header', defaultValue: 'Social Channels' }),
+                    sitemapTitle: fields.text({ label: 'Sitemap Header', defaultValue: 'Sitemap' }),
+                    companyName: fields.text({ label: 'Footer Company Name', defaultValue: 'Bug Bits' }),
+                    tagline: fields.text({ label: 'Footer Tagline', defaultValue: 'Transforming ideas into powerful software solutions for the modern web.' }),
+                }, { label: 'Footer Customization' }),
             },
         }),
         about: singleton({
@@ -146,6 +173,11 @@ export default config({
                         name: fields.text({ label: 'Name' }),
                         role: fields.text({ label: 'Role' }),
                         bio: fields.text({ label: 'Bio', multiline: true }),
+                        image: fields.image({
+                            label: 'Profile Image',
+                            directory: 'public/images/about/team',
+                            publicPath: '/images/about/team',
+                        }),
                     }),
                     {
                         label: 'Team Members',
@@ -167,6 +199,10 @@ export default config({
                         twitter: fields.text({ label: 'Twitter URL' }),
                         github: fields.text({ label: 'GitHub URL' }),
                         linkedin: fields.text({ label: 'LinkedIn URL' }),
+                        facebook: fields.text({ label: 'Facebook URL' }),
+                        instagram: fields.text({ label: 'Instagram URL' }),
+                        whatsapp: fields.text({ label: 'WhatsApp (Link or Phone)' }),
+                        youtube: fields.text({ label: 'YouTube URL' }),
                     }, { label: 'Social Links' }),
                 }, { label: 'Contact Info' }),
                 navigation: fields.array(
@@ -179,6 +215,64 @@ export default config({
                         itemLabel: props => props.fields.label.value || 'Link',
                     }
                 ),
+                branding: fields.object({
+                    primaryColorPreset: fields.select({
+                        label: 'Primary Brand Color',
+                        description: 'Choose a preset color or select "Custom" to enter a Hex code.',
+                        options: [
+                            { label: '🟠 Orange (Default)', value: 'orange' },
+                            { label: '🔵 Blue', value: 'blue' },
+                            { label: '🟢 Green', value: 'green' },
+                            { label: '🟣 Purple', value: 'purple' },
+                            { label: '🔴 Red', value: 'red' },
+                            { label: '🎨 Custom Hex', value: 'custom' },
+                        ],
+                        defaultValue: 'orange',
+                    }),
+                    customPrimaryColor: fields.conditional(
+                        fields.select({
+                            label: 'Is Custom Color?',
+                            options: [
+                                { label: 'Yes', value: 'yes' },
+                                { label: 'No', value: 'no' },
+                            ],
+                            defaultValue: 'no',
+                        }),
+                        {
+                            yes: fields.text({ label: 'Custom Primary Color (Hex)', defaultValue: '#f97316' }),
+                            no: fields.empty(),
+                        }
+                    ),
+                    gradientPreset: fields.select({
+                        label: 'Site Gradient Style',
+                        options: [
+                            { label: '🔥 Sunset (Orange/Red)', value: 'sunset' },
+                            { label: '🌊 Ocean (Blue/Cyan)', value: 'ocean' },
+                            { label: '🌲 Forest (Green/Emerald)', value: 'forest' },
+                            { label: '🔮 Cosmic (Purple/Indigo)', value: 'cosmic' },
+                            { label: '🎨 Custom Gradient', value: 'custom' },
+                        ],
+                        defaultValue: 'sunset',
+                    }),
+                    customGradient: fields.conditional(
+                        fields.select({
+                            label: 'Is Custom Gradient?',
+                            options: [
+                                { label: 'Yes', value: 'yes' },
+                                { label: 'No', value: 'no' },
+                            ],
+                            defaultValue: 'no',
+                        }),
+                        {
+                            yes: fields.object({
+                                from: fields.text({ label: 'Gradient Start (Hex)', defaultValue: '#fb923c' }),
+                                via: fields.text({ label: 'Gradient Middle (Hex)', defaultValue: '#f59e0b' }),
+                                to: fields.text({ label: 'Gradient End (Hex)', defaultValue: '#dc2626' }),
+                            }),
+                            no: fields.empty(),
+                        }
+                    ),
+                }, { label: 'Branding & Aesthetics' }),
             },
         }),
     },

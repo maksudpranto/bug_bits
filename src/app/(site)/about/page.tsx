@@ -2,6 +2,7 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '@/keystatic.config';
 import { Metadata } from 'next';
 import { DocumentRenderer } from '@keystatic/core/renderer';
+import AnimatedTeamGrid from '@/components/animated-team-grid';
 
 export const metadata: Metadata = {
     title: 'About Us | Bug Bits',
@@ -22,7 +23,7 @@ export default async function AboutPage() {
             {/* Mission Section */}
             <section className="text-center max-w-4xl mx-auto space-y-6">
                 <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About Bug Bits</h1>
-                <p className="text-2xl font-medium text-primary">
+                <p className="text-2xl font-medium text-primary italic">
                     "{mission}"
                 </p>
             </section>
@@ -30,31 +31,23 @@ export default async function AboutPage() {
             {/* Story Section */}
             {story && (
                 <section className="max-w-3xl mx-auto prose prose-lg dark:prose-invert">
-                    <h2>Our Story</h2>
-                    <DocumentRenderer document={story} />
+                    <h2 className="text-3xl font-bold mb-8">Our Story</h2>
+                    <div className="bg-muted/30 p-8 md:p-12 rounded-[2.5rem] border border-primary/5 shadow-inner">
+                        <DocumentRenderer document={story} />
+                    </div>
                 </section>
             )}
 
             {/* Team Section */}
             <section>
-                <h2 className="text-3xl font-bold text-center mb-12">Meet the Team</h2>
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {team.map((member, i) => (
-                        <div key={i} className="flex flex-col items-center text-center p-6 bg-muted/30 rounded-xl">
-                            <div className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                                {member.name.charAt(0)}
-                            </div>
-                            <h3 className="text-xl font-bold">{member.name}</h3>
-                            <p className="text-primary font-medium mb-2">{member.role}</p>
-                            <p className="text-muted-foreground text-sm">{member.bio}</p>
-                        </div>
-                    ))}
-                    {team.length === 0 && (
-                        <div className="col-span-full text-center text-muted-foreground">
-                            Team members will appear here.
-                        </div>
-                    )}
+                <div className="text-center mb-16 space-y-4">
+                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Meet the Team</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+                        The talented individuals driving innovation and excellence at Bug Bits.
+                    </p>
                 </div>
+
+                <AnimatedTeamGrid team={team as any} />
             </section>
         </div>
     );

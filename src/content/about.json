@@ -1,4 +1,18 @@
 {
   "mission": "This is test",
-  "team": []
+  "team": [
+    {
+      "name": "Pranto",
+      "role": "CEO",
+      "image": "/images/about/team/team/0/image.jpg"
+    },
+    {
+      "name": "Amin",
+      "role": "CTO"
+    },
+    {
+      "name": "Mamun",
+      "role": "CBO"
+    }
+  ]
 }

@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
+import ThemeInjector from "@/components/theme-injector";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
@@ -27,6 +28,7 @@ export default function RootLayout({
           spaceGrotesk.variable
         )}
       >
+        <ThemeInjector />
         <SiteHeader />
         <main className="flex-1">
           {children}

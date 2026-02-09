@@ -9,7 +9,7 @@ export default function AboutSnippet({ data }: { data: any }) {
         <section className="relative py-24 overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute inset-0 bg-muted/30">
-                <div className="absolute -bottom-[20%] right-0 w-[40%] h-[40%] bg-amber-500/5 rounded-full blur-[100px]" />
+                <div className="absolute -bottom-[20%] right-0 w-[40%] h-[40%] bg-primary/5 rounded-full blur-[100px]" />
             </div>
 
             <div className="container px-4 md:px-6 relative z-10">

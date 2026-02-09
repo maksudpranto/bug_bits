@@ -1,7 +1,7 @@
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '@/keystatic.config';
 import Link from 'next/link';
-import { Github, Twitter, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail, MapPin, Phone, Facebook, Instagram, Youtube, MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -13,6 +13,12 @@ export default async function SiteFooter() {
     const contactInfo = settings?.contact;
     const socials = contactInfo?.socials;
     const contactSection = homepage?.contactSection;
+    const footerData = homepage?.footer || {
+        socialTitle: 'Social Channels',
+        sitemapTitle: 'Sitemap',
+        companyName: 'Bug Bits',
+        tagline: 'Transforming ideas into powerful software solutions for the modern web.'
+    };
 
     return (
         <footer className="bg-background border-t">
@@ -71,35 +77,60 @@ export default async function SiteFooter() {
                 <div className="container px-4 md:px-6">
                     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-12">
                         <div className="space-y-4">
-                            <h3 className="font-bold text-lg">Bug Bits</h3>
+                            <h3 className="font-bold text-lg">{footerData.companyName}</h3>
                             <p className="text-muted-foreground text-sm max-w-xs">
-                                Transforming ideas into powerful software solutions for the modern web.
+                                {footerData.tagline}
                             </p>
                         </div>
 
                         <div className="space-y-4">
-                            <h3 className="font-semibold text-sm tracking-wider uppercase">Social Channels</h3>
+                            <h3 className="font-semibold text-sm tracking-wider uppercase">{footerData.socialTitle}</h3>
                             <div className="flex gap-4">
                                 {socials?.github && (
-                                    <a href={socials.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                    <a href={socials.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
                                         <Github className="w-5 h-5" />
                                     </a>
                                 )}
                                 {socials?.twitter && (
-                                    <a href={socials.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                    <a href={socials.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
                                         <Twitter className="w-5 h-5" />
                                     </a>
                                 )}
                                 {socials?.linkedin && (
-                                    <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                    <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
                                         <Linkedin className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {socials?.facebook && (
+                                    <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                        <Facebook className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {socials?.instagram && (
+                                    <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                        <Instagram className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {socials?.youtube && (
+                                    <a href={socials.youtube} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors">
+                                        <Youtube className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {socials?.whatsapp && (
+                                    <a
+                                        href={socials.whatsapp.startsWith('http') ? socials.whatsapp : `https://wa.me/${socials.whatsapp.replace(/\D/g, '')}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-primary p-2 bg-background rounded-full border hover:border-primary/50 transition-colors"
+                                    >
+                                        <MessageCircle className="w-5 h-5" />
                                     </a>
                                 )}
                             </div>
                         </div>
 
                         <div className="space-y-4">
-                            <h3 className="font-semibold text-sm tracking-wider uppercase">Sitemap</h3>
+                            <h3 className="font-semibold text-sm tracking-wider uppercase">{footerData.sitemapTitle}</h3>
                             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
                                 <Link href="/services" className="hover:text-primary">Services</Link>
                                 <Link href="/about" className="hover:text-primary">About</Link>

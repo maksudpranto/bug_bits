@@ -3,12 +3,24 @@
     "email": "maksudpranto@gmail.com",
     "phone": "01756610535",
     "address": "201 North Ibrahimpur",
-    "socials": {}
+    "socials": {
+      "facebook": "facebook.com/03pranto"
+    }
   },
   "navigation": [
     {
       "label": "About Us",
       "url": "/about"
     }
-  ]
+  ],
+  "branding": {
+    "primaryColorPreset": "orange",
+    "customPrimaryColor": {
+      "discriminant": "no"
+    },
+    "gradientPreset": "forest",
+    "customGradient": {
+      "discriminant": "no"
+    }
+  }
 }

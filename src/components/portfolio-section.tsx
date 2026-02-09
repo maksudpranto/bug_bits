@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
-export default function PortfolioSection({ data }: { data: any[] }) {
-    if (!data || data.length === 0) return null;
+export default function PortfolioSection({ data }: { data: any }) {
+    if (!data || !data.items || data.items.length === 0) return null;
 
     return (
         <section className="relative py-24 overflow-hidden">
@@ -15,9 +15,9 @@ export default function PortfolioSection({ data }: { data: any[] }) {
             <div className="container px-4 md:px-6 relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
                     <div className="max-w-2xl">
-                        <h2 className="text-3xl font-bold tracking-tight mb-4">Our Work</h2>
+                        <h2 className="text-3xl font-bold tracking-tight mb-4">{data.title}</h2>
                         <p className="text-muted-foreground">
-                            Explore some of the impactful digital solutions we've delivered.
+                            {data.description}
                         </p>
                     </div>
                     <Button variant="outline" className="gap-2">
@@ -26,7 +26,7 @@ export default function PortfolioSection({ data }: { data: any[] }) {
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {data.map((project, i) => (
+                    {data.items.map((project: any, i: number) => (
                         <div key={i} className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all">
                             <div className="aspect-video relative bg-muted overflow-hidden">
                                 {project.image ? (

@@ -1,4 +1,4 @@
-import * as React from "react"
+import { forwardRef } from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -36,15 +36,35 @@ const buttonVariants = cva(
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-    asChild?: boolean
+    asChild?: boolean;
+    customStyles?: {
+        background?: string;
+        hover?: string;
+        text?: string;
+    };
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+    ({ className, variant, size, asChild = false, customStyles, style, ...props }, ref) => {
         const Comp = asChild ? Slot : "button"
+
+        // Create unified styles including our custom variables
+        const buttonStyles = {
+            ...style,
+            '--btn-custom-bg': customStyles?.background,
+            '--btn-custom-hover': customStyles?.hover,
+            '--btn-custom-text': customStyles?.text,
+            ...(customStyles?.background && { backgroundColor: 'var(--btn-custom-bg)' }),
+            ...(customStyles?.text && { color: 'var(--btn-custom-text)' }),
+        } as React.CSSProperties;
+
         return (
             <Comp
-                className={cn(buttonVariants({ variant, size, className }))}
+                className={cn(
+                    buttonVariants({ variant, size, className }),
+                    customStyles?.hover && "hover:!bg-[var(--btn-custom-hover)]"
+                )}
+                style={buttonStyles}
                 ref={ref}
                 {...props}
             />

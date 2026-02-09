@@ -1,8 +1,8 @@
 import { Shield, Zap, Target, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
-export default function WhyChooseUs({ data }: { data: any[] }) {
-    if (!data || data.length === 0) return null;
+export default function WhyChooseUs({ data }: { data: any }) {
+    if (!data || !data.items || data.items.length === 0) return null;
 
     return (
         <section className="relative py-24 overflow-hidden">
@@ -13,13 +13,13 @@ export default function WhyChooseUs({ data }: { data: any[] }) {
 
             <div className="container px-4 md:px-6 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold tracking-tight mb-4">Why Choose Us</h2>
+                    <h2 className="text-3xl font-bold tracking-tight mb-4">{data.title}</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">
-                        We deliver more than just code. We deliver value, reliability, and innovation.
+                        {data.description}
                     </p>
                 </div>
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-                    {data.map((item, i) => (
+                    {data.items.map((item: any, i: number) => (
                         <Card key={i} className="bg-muted/50 border-none shadow-none">
                             <CardContent className="pt-6 text-center">
                                 <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">

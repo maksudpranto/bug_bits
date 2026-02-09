@@ -13,27 +13,33 @@ interface Feature {
     icon: string;
 }
 
-export default function FeaturesSection({ data }: { data: Feature[] }) {
-    if (!data || data.length === 0) return null;
+interface FeaturesData {
+    title: string;
+    subtitle: string;
+    items: Feature[];
+}
+
+export default function FeaturesSection({ data }: { data: FeaturesData }) {
+    if (!data || !data.items || data.items.length === 0) return null;
 
     return (
         <section id="features" className="relative py-24 overflow-hidden">
             {/* Background Gradient */}
             <div className="absolute inset-0 bg-background">
                 <div className="absolute top-0 left-1/4 w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]" />
-                <div className="absolute bottom-0 right-1/4 w-[50%] h-[50%] bg-amber-500/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-0 right-1/4 w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]" />
             </div>
 
             <div className="container px-4 md:px-6 relative z-10">
                 <div className="text-center mb-16 space-y-4">
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Our Core Expertise</h2>
+                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">{data.title}</h2>
                     <p className="text-muted-foreground text-lg max-w-[700px] mx-auto">
-                        We leverage the latest technologies to build robust, scalable, and high-performance digital solutions.
+                        {data.subtitle}
                     </p>
                 </div>
 
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {data.map((feature, i) => {
+                    {data.items.map((feature, i) => {
                         const Icon = iconMap[feature.icon] || Globe;
                         return (
                             <motion.div
