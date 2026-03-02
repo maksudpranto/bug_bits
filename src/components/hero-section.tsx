@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export default function HeroSection({ heroData }: { heroData: any }) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -13,178 +13,200 @@ export default function HeroSection({ heroData }: { heroData: any }) {
         offset: ["start start", "end start"]
     });
 
-    const yValue = useTransform(scrollYProgress, [0, 1], [0, 200]);
-    const opacityValue = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    const yValue = useTransform(scrollYProgress, [0, 1], [0, 300]);
+    const opacityValue = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+    // Mouse movement for parallax
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+    const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+            mouseX.set((clientX / innerWidth - 0.5) * 40);
+            mouseY.set((clientY / innerHeight - 0.5) * 40);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, [mouseX, mouseY]);
 
     // Split title if possible to highlight the word
-    const titleParts = heroData.title.split(heroData.highlightWord || "Future");
+    const highlight = heroData.highlightWord || "Future";
+    const titleParts = heroData.title.split(highlight);
 
     const renderBackground = () => {
-        switch (heroData.backgroundStyle) {
-            case 'mesh':
-                return (
-                    <div className="absolute inset-0 -z-10 group overflow-hidden">
-                        <div className="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full bg-primary/10 blur-[120px] animate-pulse"></div>
-                        <div className="absolute -bottom-[40%] -right-[20%] w-[80%] h-[80%] rounded-full bg-primary/10 blur-[120px] animate-pulse delay-700"></div>
-                        <div className="absolute inset-0 bg-[radial-gradient(hsl(var(--muted-foreground)/0.1)_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
-                    </div>
-                );
-            case 'void':
-                return (
-                    <div className="absolute inset-0 -z-10 bg-background">
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--primary)/0.05)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--primary)/0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 blur-[120px] rounded-full"></div>
-                    </div>
-                );
-            default: // gradient
-                return (
-                    <div className="absolute inset-0 -z-10">
-                        <div className="absolute inset-0 bg-background [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,hsl(var(--primary))_100%)] opacity-20 dark:opacity-40"></div>
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--muted-foreground)/0.05)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--muted-foreground)/0.05)_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-                    </div>
-                );
+        return (
+            <div className="absolute inset-0 -z-10 overflow-hidden bg-[#030303]">
+                {/* Grid Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f1f1f_1px,transparent_1px),linear-gradient(to_bottom,#1f1f1f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
+
+                {/* Moving Blobs */}
+                <motion.div
+                    style={{ x: springX, y: springY }}
+                    className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen opacity-50"
+                />
+                <motion.div
+                    style={{ x: useTransform(springX, (v) => -v), y: useTransform(springY, (v) => -v) }}
+                    className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/20 rounded-full blur-[120px] mix-blend-screen opacity-50"
+                />
+
+                {/* Scanline Effect */}
+                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[size:100%_4px] pointer-events-none opacity-[0.03]"></div>
+            </div>
+        );
+    };
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.15, delayChildren: 0.3 }
         }
     };
 
-    const contentVariants: any = {
-        hidden: { opacity: 0, y: 30 },
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, ease: "easeOut", staggerChildren: 0.2 }
+            filter: "blur(0px)",
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
         }
     };
 
-    const itemVariants: any = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     return (
-        <section ref={containerRef} className="relative min-h-[90vh] flex items-center overflow-hidden py-20 lg:py-32">
+        <section ref={containerRef} className="relative min-h-screen flex items-center overflow-hidden py-24 sm:py-32">
             {renderBackground()}
 
             <div className="container px-4 md:px-6 relative z-10">
-                <div className={`grid gap-12 items-center ${heroData.layout === 'split' ? 'lg:grid-cols-2' : 'text-center max-w-4xl mx-auto'}`}>
-
-                    <motion.div
-                        variants={contentVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="space-y-8"
-                    >
-                        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-sm">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className={`grid gap-16 items-center ${heroData.layout === 'split' ? 'lg:grid-cols-2' : 'text-center max-w-5xl mx-auto'}`}
+                >
+                    <div className="space-y-10">
+                        <motion.div
+                            variants={itemVariants}
+                            className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium backdrop-blur-md shadow-2xl transition-all hover:bg-white/10"
+                        >
+                            <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse shadow-[0_0_8px_hsl(var(--accent))]"></span>
+                            <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                                {heroData.badge || "System Online v1.0.4"}
                             </span>
-                            {heroData.badge || "Innovating the Digital Frontier"}
                         </motion.div>
 
                         <motion.h1
                             variants={itemVariants}
-                            className="text-5xl font-black tracking-tight lg:text-7xl xl:text-8xl leading-[1.1]"
+                            className="font-space text-6xl font-bold tracking-tight lg:text-8xl xl:text-9xl leading-[0.9] text-white"
                         >
-                            {titleParts.length > 1 ? (
-                                <>
-                                    {titleParts[0]}
-                                    <span className="relative inline-block px-1">
-                                        <span className="relative z-10 text-dynamic-gradient">
-                                            {heroData.highlightWord}
+                            {titleParts.map((part: string, i: number) => (
+                                <span key={i}>
+                                    {part}
+                                    {i < titleParts.length - 1 && (
+                                        <span className="relative inline-block">
+                                            <span className="bg-gradient-to-br from-primary via-accent to-primary bg-clip-text text-transparent bg-[size:200%_200%] animate-gradient">
+                                                {highlight}
+                                            </span>
                                         </span>
-                                        <motion.span
-                                            initial={{ scaleX: 0 }}
-                                            whileInView={{ scaleX: 1 }}
-                                            transition={{ duration: 1, delay: 0.5 }}
-                                            className="absolute bottom-2 left-0 w-full h-3 bg-primary/10 -z-10 origin-left"
-                                        />
-                                    </span>
-                                </>
-                            ) : (
-                                heroData.title
-                            )}
-                            {titleParts[1]}
+                                    )}
+                                </span>
+                            ))}
                         </motion.h1>
 
                         <motion.p
                             variants={itemVariants}
-                            className="text-lg md:text-xl text-muted-foreground lg:max-w-[600px] leading-relaxed"
+                            className="text-lg md:text-xl text-muted-foreground lg:max-w-[550px] leading-relaxed font-light"
                         >
                             {heroData.subtitle}
                         </motion.p>
 
-                        <motion.div variants={itemVariants} className={`flex flex-wrap gap-4 ${heroData.layout === 'split' ? '' : 'justify-center'}`}>
-                            {heroData.primaryButton?.text && (
-                                <Button
-                                    size="lg"
-                                    className="rounded-full px-8 h-14 text-lg font-bold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:-translate-y-1"
-                                    customStyles={{
-                                        background: heroData.primaryButton.background,
-                                        hover: heroData.primaryButton.hover,
-                                        text: heroData.primaryButton.text_color
-                                    }}
-                                    asChild
-                                >
-                                    <a href={heroData.primaryButton.link || '#'}>
-                                        {heroData.primaryButton.text} <ArrowRight className="ml-2 w-5 h-5" />
-                                    </a>
-                                </Button>
-                            )}
-                            {heroData.secondaryButton?.text && (
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    className="rounded-full px-8 h-14 text-lg font-bold backdrop-blur-sm hover:bg-muted/40 transition-all"
-                                    customStyles={{
-                                        background: heroData.secondaryButton.background,
-                                        hover: heroData.secondaryButton.hover,
-                                        text: heroData.secondaryButton.text_color
-                                    }}
-                                    asChild
-                                >
-                                    <a href={heroData.secondaryButton.link || '#'}>
-                                        {heroData.secondaryButton.text}
-                                    </a>
-                                </Button>
-                            )}
+                        <motion.div variants={itemVariants} className={`flex flex-wrap gap-5 ${heroData.layout === 'split' ? '' : 'justify-center'}`}>
+                            <Button
+                                size="lg"
+                                className="rounded-full px-10 h-16 text-lg font-bold cyber-border shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:scale-105 transition-transform"
+                                asChild
+                            >
+                                <a href={heroData.primaryButton?.link || '#'}>
+                                    {heroData.primaryButton?.text || "Initialize Project"}
+                                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </a>
+                            </Button>
+
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="rounded-full px-10 h-16 text-lg font-bold glass hover:bg-white/5 border-white/10 transition-all"
+                                asChild
+                            >
+                                <a href={heroData.secondaryButton?.link || '#'}>
+                                    {heroData.secondaryButton?.text || "Explore Data"}
+                                </a>
+                            </Button>
                         </motion.div>
-                    </motion.div>
+                    </div>
 
                     {heroData.layout === 'split' && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                            className="relative lg:ml-auto"
+                            variants={itemVariants}
+                            className="relative lg:ml-auto max-w-[600px] w-full"
                         >
-                            <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/10">
-                                {heroData.image ? (
-                                    <Image
-                                        src={heroData.image}
-                                        alt="Hero Visual"
-                                        width={800}
-                                        height={600}
-                                        className="w-full h-auto object-cover"
-                                        priority
-                                    />
-                                ) : (
-                                    <div className="aspect-[4/3] bg-primary/10 flex items-center justify-center backdrop-blur-3xl group">
-                                        <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center text-white ring-8 ring-white/5 transition-transform group-hover:scale-110">
-                                            <Play className="w-8 h-8 fill-white" />
+                            {/* Technical Frame */}
+                            <div className="relative z-10 p-4 rounded-[2rem] border border-white/10 glass shadow-2xl overflow-hidden group">
+                                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-black/40 border border-white/5">
+                                    {heroData.image ? (
+                                        <Image
+                                            src={heroData.image}
+                                            alt="Interface Blueprint"
+                                            fill
+                                            className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                                            priority
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <div className="w-20 h-20 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center animate-pulse">
+                                                <ChevronRight className="w-10 h-10 text-primary" />
+                                            </div>
                                         </div>
+                                    )}
+                                    {/* HUD Elements */}
+                                    <div className="absolute top-4 left-4 font-mono text-[10px] text-primary/50 uppercase tracking-widest">
+                                        {heroData.subCaption || "Data visualization // secure_link_active"}
                                     </div>
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                                    <div className="absolute bottom-4 right-4 h-8 w-24 bg-white/5 rounded backdrop-blur-md border border-white/10 flex items-center justify-around px-2">
+                                        <div className="h-4 w-[2px] bg-accent/50 animate-bounce"></div>
+                                        <div className="h-2 w-[2px] bg-accent/50 animate-bounce delay-75"></div>
+                                        <div className="h-5 w-[2px] bg-accent/50 animate-bounce delay-150"></div>
+                                        <div className="h-3 w-[2px] bg-accent/50 animate-bounce delay-100"></div>
+                                        <div className="h-4 w-[2px] bg-accent/50 animate-bounce delay-200"></div>
+                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                                </div>
                             </div>
 
-                            {/* Decorative elements */}
-                            <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-2xl animate-pulse"></div>
-                            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-amber-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                            {/* Decorative background glow */}
+                            <div className="absolute -inset-10 bg-primary/20 blur-[100px] -z-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                         </motion.div>
                     )}
-                </div>
+                </motion.div>
             </div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+                style={{ opacity: opacityValue }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            >
+                <div className="h-12 w-[2px] bg-gradient-to-b from-primary/50 to-transparent"></div>
+                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-[0.2em]">
+                    {heroData.scrollText || "Scroll"}
+                </span>
+            </motion.div>
         </section>
     );
 }

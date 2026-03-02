@@ -4,6 +4,8 @@
     "title": "We Build Software That Defines The",
     "highlightWord": "Future",
     "subtitle": "Bug Bits empowers businesses with cutting-edge web & mobile solutions. We turn complex logic into elegant, scalable, and high-performance applications.",
+    "subCaption": "Data visualization // secure_link_active",
+    "scrollText": "Scroll",
     "layout": "split",
     "backgroundStyle": "mesh",
     "image": "/images/hero/hero/image.jpg",
@@ -54,29 +56,37 @@
     ]
   },
   "whyChooseUs": {
-    "title": "Why Choose Us",
+    "phaseBadge": "Phase_01: Advantage_Matrix",
+    "titlePrefix": "Why Choose",
+    "titleHighlight": "Bug Bits",
     "description": "We deliver more than just code. We deliver value, reliability, and innovation.",
     "items": [
       {
         "title": "Excellence in Engineering",
-        "description": "Our team consists of top-tier engineers who are passionate about code quality and best practices."
+        "description": "Our team consists of top-tier engineers who are passionate about code quality and best practices.",
+        "icon": "Target"
       },
       {
         "title": "Transparent Communication",
-        "description": "We believe in open, honest communication. You'll always know the status of your project."
+        "description": "We believe in open, honest communication. You'll always know the status of your project.",
+        "icon": "Target"
       },
       {
         "title": "On-Time Delivery",
-        "description": "We respect deadlines. Our agile process ensures we deliver milestones on schedule."
+        "description": "We respect deadlines. Our agile process ensures we deliver milestones on schedule.",
+        "icon": "Target"
       },
       {
         "title": "Client-Centric Approach",
-        "description": "Your success is our success. We work closely with you to understand your unique business needs."
+        "description": "Your success is our success. We work closely with you to understand your unique business needs.",
+        "icon": "Target"
       }
     ]
   },
   "process": {
-    "title": "Our Process",
+    "phaseBadge": "Phase_02: Execution_Protocol",
+    "titlePrefix": "Our",
+    "titleHighlight": "Process",
     "description": "From concept to launch, we follow a proven methodology to ensure success.",
     "items": [
       {
@@ -121,12 +131,15 @@
       }
     ]
   },
+  "testimonialsSection": {},
   "aboutSection": {
+    "badge": "About Us",
     "title": "About Bug Bits",
     "content": "Founded in 2024, Bug Bits is a technology partner for ambitious companies. We combine technical expertise with creative problem-solving to deliver software that makes a difference.\n\nOur team is distributed globally but united by a single mission: to build the future of digital experiences.",
     "image": "/images/about/aboutSection/image.jpg"
   },
   "cta": {
+    "badge": "Ready to Scale // Next Gen Tech",
     "title": "Ready to Start Your Project?",
     "subtitle": "Would you like to start a project with us? Let’s discuss your idea and turn it into a reliable digital solution.",
     "button": {
@@ -138,6 +151,7 @@
     }
   },
   "ctaSecondary": {
+    "badge": "Ready to Scale // Next Gen Tech",
     "title": "Innovative Solutions for Complex Problems",
     "subtitle": "We don’t just build apps; we solve business challenges with smart technology.",
     "button": {

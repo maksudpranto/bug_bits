@@ -1,11 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Code, Zap, Globe, Server, Shield, Database, Copy, Cloud } from "lucide-react";
-import Testimonials from "@/components/testimonials";
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '@/keystatic.config';
 import HeroSection from "@/components/hero-section";
-import WhyChooseUs from "@/components/why-choose-us";
-import OurProcess from "@/components/our-process";
+import Testimonials from "@/components/testimonials";
+import OperationalBlueprint from "@/components/operational-blueprint";
 import PortfolioSection from "@/components/portfolio-section";
 import AboutSnippet from "@/components/about-snippet";
 import CTASection from "@/components/cta-section";
@@ -30,6 +27,7 @@ export default async function Home() {
   const whyChooseUs = (homepageFiles?.whyChooseUs || { title: "Why Choose Us", description: "We deliver more than just code.", items: [] }) as any;
   const process = (homepageFiles?.process || { title: "Our Process", description: "Methodology for success.", items: [] }) as any;
   const portfolio = (homepageFiles?.portfolio || { title: "Our Work", description: "Impactful solutions.", items: [] }) as any;
+  const testimonials = await reader.collections.testimonials.all();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,11 +38,11 @@ export default async function Home() {
         <FeaturesSection data={features} />
 
         {/* Testimonials Section */}
-        <Testimonials />
+        <Testimonials data={testimonials} sectionData={homepageFiles?.testimonialsSection} />
 
-        {/* New Sections */}
-        <WhyChooseUs data={whyChooseUs} />
-        <OurProcess data={process} />
+        {/* Operational Blueprint (Merged Why & How) */}
+        <OperationalBlueprint whyData={whyChooseUs} processData={process} />
+
         <CTASection data={homepageFiles?.ctaSecondary} />
         <PortfolioSection data={portfolio} />
         <AboutSnippet data={homepageFiles?.aboutSection} />

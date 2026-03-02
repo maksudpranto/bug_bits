@@ -1,12 +1,10 @@
 "use client";
 
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '@/keystatic.config';
 import { DocumentRenderer } from '@keystatic/core/renderer';
 import AnimatedTeamGrid from '@/components/animated-team-grid';
 import { motion } from 'framer-motion';
 
-export default function AboutPage({ data, story }: { data: any, story: any }) {
+export default function AboutClient({ data, story }: { data: any, story: any }) {
     const mission = data?.mission || "To build software that empowers the future.";
     const team = data?.team || [];
 
